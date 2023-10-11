@@ -1,29 +1,44 @@
 // Функция для проверки длины строки
-function lengthStrings(string, maxLength) {
-  // Проверка длины строки
-  return string.length <= maxLength; //Функция возвращает результат этого сравнения
+function isLengthString(string, length) {
+  return string.length <= length;
 }
 
-// console.log(lengthStrings('xyzxyz', 1));
+isLengthString('проверяемая строка', 20);
+isLengthString('проверяемая строка', 18);
+isLengthString('проверяемая строка', 10);
 
 // Проверка строки на палиндромность
-function checkPalindrome(string) {
-  const newString = string.toLowerCase().replaceAll(/\s/g,'');
-
-  return newString;
+function isPalindrome(randomString) {
+  const string = randomString.toLowerCase().replaceAll(' ','');
+  for (let i = 0; i < string.length / 2; i++) {
+    if (string.at(i) !== string.at(-i - 1)) {
+      return false;
+    }
+  }
+  return true;
 }
 
-function returnLast(string) {
+isPalindrome('топот');
+isPalindrome('ДовОд');
+isPalindrome('Кекс');
+isPalindrome('Лёша на полке клопа нашёл ');
 
-  let totalString = 0;
-
-  for (let reverseString = totalString.length; reverseString > 0;reverseString--) {
-    const newTotalString = parseInt(string[reverseString], 5);
+function extractNumber(arg) {
+  const string = arg.toString();
+  let result = '';
+  for (let i = 0; 1 < string.length; i++) {
+    if (!Number.isNaN (parseInt(string[i], 10))) {
+      result += string[i];
+    }
   }
 
-  totalString += newTotalString
-
+  return parseInt(result, 10);
 }
 
-
-console.log(returnLast('Xy x'));
+// extractNumber('2023 год');
+extractNumber('ECMAScript 2022');
+// extractNumber('1 кефир, 0.5 батона');
+// extractNumber('я томат');
+// extractNumber(2023);
+// extractNumber(-1);
+// extractNumber(1.5);
