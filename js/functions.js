@@ -26,7 +26,7 @@ isPalindrome('Лёша на полке клопа нашёл ');
 function extractNumber(arg) {
   const string = arg.toString();
   let result = '';
-  for (let i = 0; 1 < string.length; i++) {
+  for (let i = 0; i < string.length; i++) {
     if (!Number.isNaN (parseInt(string[i], 10))) {
       result += string[i];
     }
@@ -36,9 +36,9 @@ function extractNumber(arg) {
 }
 
 // extractNumber('2023 год');
-extractNumber('ECMAScript 2022');
+// extractNumber('ECMAScript 2022');
 // extractNumber('1 кефир, 0.5 батона');
 // extractNumber('я томат');
 // extractNumber(2023);
 // extractNumber(-1);
-// extractNumber(1.5);
+// extractNumber(1.5);и
