@@ -1,4 +1,3 @@
-// Функция для проверки длины строки
 function isLengthString(string, length) {
   return string.length <= length;
 }
@@ -7,7 +6,6 @@ isLengthString('проверяемая строка', 20);
 isLengthString('проверяемая строка', 18);
 isLengthString('проверяемая строка', 10);
 
-// Проверка строки на палиндромность
 function isPalindrome(randomString) {
   const string = randomString.toLowerCase().replaceAll(' ','');
   for (let i = 0; i < string.length / 2; i++) {
@@ -35,10 +33,10 @@ function extractNumber(arg) {
   return parseInt(result, 10);
 }
 
-// extractNumber('2023 год');
-// extractNumber('ECMAScript 2022');
-// extractNumber('1 кефир, 0.5 батона');
-// extractNumber('я томат');
-// extractNumber(2023);
-// extractNumber(-1);
-// extractNumber(1.5);и
+extractNumber('2023 год');
+extractNumber('ECMAScript 2022');
+extractNumber('1 кефир, 0.5 батона');
+extractNumber('я томат');
+extractNumber(2023);
+extractNumber(-1);
+extractNumber(1.5);
