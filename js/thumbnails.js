@@ -1,6 +1,6 @@
-const thumbnailTemplate = document.querySelector('#picture')
-  .content
-  .querySelector('.picture');
+import { getTemplate } from './util.js';
+
+const thumbnailTemplate = getTemplate('picture');
 
 // Отрисовка и заполнение миниатюры
 const createThumbnail = ({url, description, likes, comments, id}) => {
@@ -14,14 +14,14 @@ const createThumbnail = ({url, description, likes, comments, id}) => {
   return thumbnail;
 };
 
-const renderThumbnails = (pictures, сontainer) => { //Приходит массив с данными, которые были сгенерированы
+const renderThumbnails = (pictures, container) => { //Приходит массив с данными, которые были сгенерированы
   const fragment = document.createDocumentFragment();
   pictures.forEach((picture) => { // Перебор массива
     const thumbnail = createThumbnail(picture); //Создается элемент миниатюры(используем шаблон)
     fragment.append(thumbnail); //Добавляем в фрагмент
   });
 
-  сontainer.append(fragment); //Добавляем в контейнер
+  container.append(fragment); //Добавляем в контейнер
 };
 
 export { renderThumbnails };

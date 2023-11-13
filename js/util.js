@@ -17,4 +17,6 @@ const createIdGenerator = () => {
   };
 };
 
-export {getRandomInteger, getRandomArrayElement, createIdGenerator};
+const getTemplate = (id) => document.querySelector(`#${id}`)?.content.firstElementChild;
+
+export {getRandomInteger, getRandomArrayElement, createIdGenerator, getTemplate};

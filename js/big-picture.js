@@ -1,3 +1,5 @@
+import { getTemplate } from './util.js';
+
 const COMMENTS_COUNT_SHOW = 5;
 
 const bigPictureElement = document.querySelector('.big-picture');
@@ -8,16 +10,13 @@ const commentsListElement = bigPictureElement.querySelector('.social__comments')
 const commentCountElement = bigPictureElement.querySelector('.social__comment-shown-count');
 const totalCommentCountElement = bigPictureElement.querySelector('.social__comment-total-count');
 const commentsLoaderElement = bigPictureElement.querySelector('.comments-loader');
-const commentElement = document
-  .querySelector('#comment')
-  .content
-  .querySelector('.social__comment'); // Находим элемент в списке
+const commentTemplate = getTemplate('comment');
 
 let commentsCountShow = 0;
 let comments = [];
 
 const createComment = ({ avatar, message, name }) => {
-  const newComment = commentElement.cloneNode(true);
+  const newComment = commentTemplate.cloneNode(true);
 
   newComment.querySelector('.social__picture').src = avatar;
   newComment.querySelector('.social__picture').alt = name;
@@ -27,6 +26,7 @@ const createComment = ({ avatar, message, name }) => {
 };
 
 const renderComments = () => {
+  const startSlice = commentsCountShow;
   commentsCountShow += COMMENTS_COUNT_SHOW;
 
   if (commentsCountShow >= comments.length) {
@@ -37,21 +37,17 @@ const renderComments = () => {
   }
 
   const fragment = document.createDocumentFragment(); // Создаем фрагмент
-  for (let i = 0; i < commentsCountShow; i++) {
-    const comment = createComment(comments[i]); // Передаем в функцию createComment элемент массива item
-    fragment.append(comment); // Добавляем комментарий
-  }
+  comments.slice(startSlice, commentsCountShow).forEach((comment) => {
+    fragment.append(createComment(comment)); // Добавляем комментарий
+  });
 
-  commentsListElement.innerHTML = ''; // Очищаем список комментариев
   commentsListElement.append(fragment);
 
   commentCountElement.textContent = commentsCountShow;
   totalCommentCountElement.textContent = comments.length;
 };
 
-const onCommentsLoaderClick = () => {
-  renderComments();
-};
+const onCommentsLoaderClick = renderComments;
 
 const hidePicture = () => {
   commentsCountShow = 0;
@@ -59,9 +55,7 @@ const hidePicture = () => {
   bodyElement.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown); // Снятие обработчика, после закрытия окна
 };
-const onClosePictureButtonClick = () => {
-  hidePicture();
-};
+const onClosePictureButtonClick = hidePicture;
 
 function onDocumentKeydown(evt) {
   if (evt.key === 'Escape') {
@@ -81,13 +75,12 @@ const showPicture = (pictureData) => {
   bigPictureElement.classList.remove('hidden');
   bodyElement.classList.add('modal-open');
   document.addEventListener('keydown', onDocumentKeydown);
+  renderPicture(pictureData);
+  commentsListElement.innerHTML = '';
 
   comments = pictureData.comments;
-  if (comments.length > 0) {
-    renderComments();
-  }
 
-  renderPicture(pictureData);
+  renderComments();
 };
 
 closePictureButtonElement.addEventListener('click', onClosePictureButtonClick);
