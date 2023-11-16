@@ -16,7 +16,7 @@ const renderGallery = (pictures) => { // Принимает массив с да
     const thumbnailId = +thumbnail.dataset.thumbnailId; // Получаем значение атрибута из разметки, + это перевод строки в число
     const pictureData = pictures.find(({id}) => id === thumbnailId); // Находим id в контейнере, который соответствует thumbnailId. Объект, по которому кликнули
 
-    showPicture(pictureData); // Функция показа полного изображния
+    showPicture(pictureData);
   });
 
   renderThumbnails(pictures, container);
