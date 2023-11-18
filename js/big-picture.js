@@ -1,22 +1,23 @@
-import { getTemplate } from './util.js';
-
 const COMMENTS_COUNT_SHOW = 5;
 
 const bigPictureElement = document.querySelector('.big-picture');
 const bodyElement = document.querySelector('body');
 const closePictureButtonElement = bigPictureElement.querySelector('.big-picture__cancel');
 
-const commentsListElement = bigPictureElement.querySelector('.social__comments'); // Находим список
+const commentsListElement = bigPictureElement.querySelector('.social__comments');
 const commentCountElement = bigPictureElement.querySelector('.social__comment-shown-count');
 const totalCommentCountElement = bigPictureElement.querySelector('.social__comment-total-count');
 const commentsLoaderElement = bigPictureElement.querySelector('.comments-loader');
-const commentTemplate = getTemplate('comment');
+const commentElement = document
+  .querySelector('#comment')
+  .content
+  .querySelector('.social__comment');
 
-let commentsCountShow = 0;
+let commentsCountShown = 0;
 let comments = [];
 
 const createComment = ({ avatar, message, name }) => {
-  const newComment = commentTemplate.cloneNode(true);
+  const newComment = commentElement.cloneNode(true);
 
   newComment.querySelector('.social__picture').src = avatar;
   newComment.querySelector('.social__picture').alt = name;
@@ -26,36 +27,37 @@ const createComment = ({ avatar, message, name }) => {
 };
 
 const renderComments = () => {
-  const startSlice = commentsCountShow;
-  commentsCountShow += COMMENTS_COUNT_SHOW;
+  commentsCountShown += COMMENTS_COUNT_SHOW;
 
-  if (commentsCountShow >= comments.length) {
+  if (commentsCountShown >= comments.length) {
     commentsLoaderElement.classList.add('hidden');
-    commentsCountShow = comments.length;
+    commentsCountShown = comments.length;
   } else {
     commentsLoaderElement.classList.remove('hidden');
   }
 
-  const fragment = document.createDocumentFragment(); // Создаем фрагмент
-  comments.slice(startSlice, commentsCountShow).forEach((comment) => {
-    fragment.append(createComment(comment)); // Добавляем комментарий
-  });
+  const fragment = document.createDocumentFragment();
+  for (let i = 0; i < commentsCountShown; i++) {
+    const comment = createComment(comments[i]);
+    fragment.append(comment);
+  }
 
+  commentsListElement.innerHTML = '';
   commentsListElement.append(fragment);
 
-  commentCountElement.textContent = commentsCountShow;
+  commentCountElement.textContent = commentsCountShown;
   totalCommentCountElement.textContent = comments.length;
 };
 
-const onCommentsLoaderClick = renderComments;
+const onCommentsLoaderClick = () => renderComments();
 
 const hidePicture = () => {
-  commentsCountShow = 0;
+  commentsCountShown = 0;
   bigPictureElement.classList.add('hidden');
   bodyElement.classList.remove('modal-open');
-  document.removeEventListener('keydown', onDocumentKeydown); // Снятие обработчика, после закрытия окна
+  document.removeEventListener('keydown', onDocumentKeydown);
 };
-const onClosePictureButtonClick = hidePicture;
+const onClosePictureButtonClick = () => hidePicture();
 
 function onDocumentKeydown(evt) {
   if (evt.key === 'Escape') {
@@ -75,12 +77,13 @@ const showPicture = (pictureData) => {
   bigPictureElement.classList.remove('hidden');
   bodyElement.classList.add('modal-open');
   document.addEventListener('keydown', onDocumentKeydown);
-  renderPicture(pictureData);
-  commentsListElement.innerHTML = '';
 
   comments = pictureData.comments;
+  if (comments.length > 0) {
+    renderComments();
+  }
 
-  renderComments();
+  renderPicture(pictureData);
 };
 
 closePictureButtonElement.addEventListener('click', onClosePictureButtonClick);

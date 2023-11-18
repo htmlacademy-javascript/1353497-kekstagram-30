@@ -1,3 +1,4 @@
+/*
 import { getRandomInteger, getRandomArrayElement, createIdGenerator } from './util';
 
 const PICTURE_COUNT = 25;
@@ -50,3 +51,4 @@ const getPictures = () => Array.from(
 );
 
 export { getPictures };
+*/
