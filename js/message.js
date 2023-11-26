@@ -38,7 +38,7 @@ const showSuccessMessage = () => {
 };
 
 const showErrorMessage = () => {
-  showMessage(errorMessageElement, '.error__botton');
+  showMessage(errorMessageElement, '.error__button');
 };
 
 export { showSuccessMessage, showErrorMessage };
