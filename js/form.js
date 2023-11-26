@@ -10,9 +10,9 @@ const MAX_HASHTAG_COUNT = 5;
 const VALID_SYMBOLS = /^#[a-zа-яё0-9]{1,19}$/i;
 const FILE_TYPES = ['jpg', 'jpeg', 'png'];
 const ErrorText = {
-  INVALID_COUNT: `Максимум ${MAX_HASHTAG_COUNT} хэштегов`,
-  NOT_UNIQUE: 'Хэштеги должны быть уникальными',
-  INVALID_PATTERN: 'Неправильный хэштег'
+  INVALID_COUNT: `Максимум ${MAX_HASHTAG_COUNT} хештегов`,
+  NOT_UNIQUE: 'Хештеги должны быть уникальными',
+  INVALID_PATTERN: 'Неправильный хештег'
 };
 const SubmitButtonCaption = {
   SUBMITTING: 'Отправляю...',
@@ -23,12 +23,13 @@ const body = document.querySelector('body');
 const form = document.querySelector('.img-upload__form');
 const overlay = form.querySelector('.img-upload__overlay');
 const cancelButton = form.querySelector('.img-upload__cancel');
-const fileField = form.querySelector('.img-upload__input');
+// const fileField = form.querySelector('.img-upload__input');
+const fileField = form.querySelector('#upload-file');
 const hashtagField = form.querySelector('.text__hashtags');
 const commentField = form.querySelector('.text__description');
 const submitButton = form.querySelector('.img-upload__submit');
 const photoPreview = form.querySelector('.img-upload__preview img');
-const effectsPreviews = form.querySelector('.effects__preview');
+const effectsPreviews = form.querySelectorAll('.effects__preview');
 
 const toggleSubmitButton = (isDisabled) => {
   submitButton.disabled = isDisabled;
@@ -65,11 +66,6 @@ const hideModal = () => {
 const isTextFieldFocused = () =>
   document.activeElement === hashtagField ||
   document.activeElement === commentField;
-
-const isValidType = (file) => {
-  const fileName = file.name.toLowerCase();
-  return FILE_TYPES.some((it) => fileName.endsWith(it));
-};
 
 const normalizeTags = (tagString) => tagString
   .trim()
@@ -109,16 +105,16 @@ async function sendForm(formElement) {
   }
 }
 
-const onFormSubmit = (evt) => {
-  evt.preventDefault();
-  sendForm(evt.target);
-};
-
 const onCancelButtonClick = () => {
   hideModal();
 };
 
-const onFileInputChange = () => {
+const isValidType = (file) => {
+  const fileName = file.name.toLowerCase();
+  return FILE_TYPES.some((it) => fileName.endsWith(it));
+};
+
+const showPhoto = () => {
   const file = fileField.files[0];
 
   if (file && isValidType(file)) {
@@ -128,6 +124,12 @@ const onFileInputChange = () => {
     });
   }
   showModal();
+};
+
+const onFormSubmit = (evt) => {
+  evt.preventDefault();
+  sendForm(evt.target);
+  // pristine.validate();
 };
 
 pristine.addValidator(
@@ -152,9 +154,9 @@ pristine.addValidator(
   true
 );
 
-fileField.addEventListener('change', onFileInputChange);
+fileField.addEventListener('change', showPhoto);
 cancelButton.addEventListener('click', onCancelButtonClick);
 form.addEventListener('submit', onFormSubmit);
 initEffect();
 
-export { sendForm, hideModal };
+// export { sendForm, hideModal };
