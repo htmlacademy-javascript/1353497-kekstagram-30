@@ -128,6 +128,7 @@ const showPhoto = () => {
 const onFormSubmit = (evt) => {
   evt.preventDefault();
   sendForm(evt.target);
+  // pristine.validate();
 };
 
 pristine.addValidator(
@@ -156,3 +157,5 @@ fileField.addEventListener('change', showPhoto);
 cancelButton.addEventListener('click', onCancelButtonClick);
 form.addEventListener('submit', onFormSubmit);
 initEffect();
+
+// export { sendForm, hideModal };
