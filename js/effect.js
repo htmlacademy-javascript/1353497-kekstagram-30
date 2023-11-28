@@ -67,7 +67,7 @@ const modalElement = document.querySelector('.img-upload');
 const imageElement = modalElement.querySelector('.img-upload__preview img');
 const effectsElement = modalElement.querySelector('.effects');
 const sliderElement = modalElement.querySelector('.effect-level__slider');
-const sliderContanerElement = modalElement.querySelector('.img-upload__effect-level');
+const sliderContainerElement = modalElement.querySelector('.img-upload__effect-level');
 const effectLevelElement = modalElement.querySelector('.effect-level__value');
 
 let chosenEffect = Effect.DEFAULT;
@@ -86,11 +86,11 @@ const setImageStyle = () => {
 };
 
 const showSlider = () => {
-  sliderContanerElement.classList.remove('hidden');
+  sliderContainerElement.classList.remove('hidden');
 };
 
 const hideSlider = () => {
-  sliderContanerElement.classList.add('hidden');
+  sliderContainerElement.classList.add('hidden');
 };
 
 const onSliderUpdate = () => {
