@@ -2,12 +2,13 @@ import { renderGallery } from './gallery.js';
 import { debounce } from './util.js';
 
 const MAX_RANDOM_FILTER = 10;
+const REPAINT_DELAY = 500;
 const ACTIVE_CLASS = 'img-filters__button--active';
 
 const FilterEnum = {
   DEFAULT: 'default',
   RANDOM: 'random',
-  DISCUSSED: 'discussed'
+  DISCUSSED: 'discussed',
 };
 
 const filtersEl = document.querySelector('.img-filters');
@@ -63,7 +64,7 @@ const repaint = (filter, pictures) => {
 
 };
 
-const debounceRepaint = debounce(repaint);
+const debounceRepaint = debounce(repaint, REPAINT_DELAY);
 
 const initFilter = (pictures) => {
   filtersEl.classList.remove('img-filters--inactive');
@@ -82,4 +83,3 @@ const initFilter = (pictures) => {
   });
 };
 export { initFilter, debounceRepaint };
-

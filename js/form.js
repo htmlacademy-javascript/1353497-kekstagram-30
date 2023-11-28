@@ -89,7 +89,7 @@ function onDocumentKeydown(evt) {
 }
 
 async function sendForm(formElement) {
-  if (pristine.validate()) {
+  if (!pristine.validate()) {
     return;
   }
   try {
