@@ -25,15 +25,15 @@ let activeButton = defaultBtn;
 const filterHandlers = {
   [FilterEnum.DEFAULT]: (pictures) => pictures,
   [FilterEnum.RANDOM]: (pictures) => {
-    const randomIndexList = [];
+    const randomIndexes = [];
     const max = Math.min(MAX_RANDOM_FILTER, pictures.length);
-    while(randomIndexList.length < max) {
+    while(randomIndexes.length < max) {
       const index = getRandomIndex(0, pictures.length);
-      if(!randomIndexList.includes(index)){
-        randomIndexList.push(index);
+      if(!randomIndexes.includes(index)){
+        randomIndexes.push(index);
       }
     }
-    return randomIndexList.map((index) => pictures[index]);
+    return randomIndexes.map((index) => pictures[index]);
   },
   [FilterEnum.DISCUSSED]: (pictures) =>
     pictures.toSorted((firstPic, secondPic) =>
