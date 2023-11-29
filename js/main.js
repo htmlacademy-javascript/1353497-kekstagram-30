@@ -7,7 +7,7 @@ import { loadPictures } from './api.js';
 import { showErrorMessage as showAlert } from './util.js';
 import { initFilter } from './filter.js';
 
-async function bootstrap() {
+const bootstrap = async () => {
   try {
     const pictures = await loadPictures();
     initFilter(pictures);
@@ -15,6 +15,6 @@ async function bootstrap() {
   } catch {
     showAlert();
   }
-}
+};
 
 bootstrap();

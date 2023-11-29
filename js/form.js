@@ -88,7 +88,7 @@ function onDocumentKeydown(evt) {
   }
 }
 
-async function sendForm(formElement) {
+const sendForm = async (formElement) => {
   if (!pristine.validate()) {
     return;
   }
@@ -102,7 +102,7 @@ async function sendForm(formElement) {
     showErrorMessage();
     toggleSubmitButton(false);
   }
-}
+};
 
 const onCancelButtonClick = () => {
   hideModal();
@@ -113,7 +113,7 @@ const isValidType = (file) => {
   return FILE_TYPES.some((it) => fileName.endsWith(it));
 };
 
-const showPhoto = () => {
+const onFileInputChange = () => {
   const file = fileField.files[0];
 
   if (file && isValidType(file)) {
@@ -152,7 +152,7 @@ pristine.addValidator(
   true
 );
 
-fileField.addEventListener('change', showPhoto);
+fileField.addEventListener('change', onFileInputChange);
 cancelButton.addEventListener('click', onCancelButtonClick);
 form.addEventListener('submit', onFormSubmit);
 initEffect();
