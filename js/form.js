@@ -113,7 +113,7 @@ const isValidType = (file) => {
   return FILE_TYPES.some((it) => fileName.endsWith(it));
 };
 
-const onFileInputChange = () => {
+const onFileFieldChange = () => {
   const file = fileField.files[0];
 
   if (file && isValidType(file)) {
@@ -152,7 +152,7 @@ pristine.addValidator(
   true
 );
 
-fileField.addEventListener('change', onFileInputChange);
+fileField.addEventListener('change', onFileFieldChange);
 cancelButton.addEventListener('click', onCancelButtonClick);
 form.addEventListener('submit', onFormSubmit);
 initEffect();
